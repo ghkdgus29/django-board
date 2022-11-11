@@ -1,11 +1,46 @@
 from django.shortcuts import render, redirect
 from .models import Post
-import cv2, os
+import cv2, os, shutil
 
 
 # Create your views here.
 def index(request):
     return render(request, 'main/index.html')
+
+
+def remove_files(dir_path):
+    for (root, directories, files) in os.walk(dir_path):
+        for file in files:
+            file_path = os.path.join(root, file)
+
+            if os.path.exists(file_path):
+                os.remove(file_path)    
+
+
+def image_super_resoultion():
+    print("======================================")
+    os.system('python main.py --data_test Demo --scale 4 --pre_train download --test_only --save_results')
+    print("======================================")
+    
+    dir_path = "/content/django-board/EDSR-PyTorch/experiment/test/results-Demo"
+    for (root, directories, files) in os.walk(dir_path):
+        for file in files:
+            file_path = os.path.join(root, file)
+            file_name = file_path.split(".")[0]
+            file_name = file_name[64:]
+            file_name = "x4_" + file_name.split("_")[0]
+
+            print(file_name)
+
+            sr_img = cv2.imread(file_path)
+
+            cv2.imwrite("/content/django-board/media/" + file_name + ".jpg", sr_img)
+
+    remove_files(dir_path)
+    # remove_files("/content/django-board/EDSR-PyTorch/test")
+
+
+
 
 
 def blog(request):
@@ -15,6 +50,7 @@ def blog(request):
 
 def posting(request, pk):
     post = Post.objects.get(pk=pk)
+    image_super_resoultion()
     return render(request, 'main/posting.html', {'post': post})
 
 
@@ -65,22 +101,25 @@ def remove_post(request, pk):
 
 
 def SR(request):
-    print("======================================")
-    os.system('python main.py --data_test Demo --scale 4 --pre_train download --test_only --save_results')
-    print("======================================")
-    
-    dir_path = "/content/django-board/EDSR-PyTorch/experiment/test/results-Demo"
-    for (root, directories, files) in os.walk(dir_path):
-        for file in files:
-            file_path = os.path.join(root, file)
-            file_name = file_path.split(".")[0]
-            file_name = file_name[64:]
-            file_name = "x4_" + file_name.split("_")[0]
-
-            print(file_name)
-
-            sr_img = cv2.imread(file_path)
-
-            cv2.imwrite("/content/django-board/media/" + file_name + ".jpg", sr_img)
-
+    image_super_resoultion()
     return render(request, 'main/SR_check.html')
+
+
+def get_dir_size(path='.'):
+    total = 0
+    with os.scandir(path) as it:
+        for entry in it:
+            if entry.is_file():
+                total += entry.stat().st_size
+            elif entry.is_dir():
+                total += get_dir_size(entry.path)
+    return round(total / (1024*1024), 2)
+
+
+def admin_page(request):
+    low_img_store_capacity = get_dir_size("/content/django-board/low_img_store")
+    ori_img_store_capacity = get_dir_size("/content/django-board/ori_img_store")
+    saved = ori_img_store_capacity - low_img_store_capacity
+
+    return render(request, 'main/store_check.html', {'low_capacity' : low_img_store_capacity, 'ori_capacity' : ori_img_store_capacity, 'saved' : saved})
+

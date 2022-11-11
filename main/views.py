@@ -17,7 +17,18 @@ def remove_files(dir_path):
                 os.remove(file_path)    
 
 
-def image_super_resoultion():
+def file_exist_check(file_name):
+    dir_path = "/content/django-board/media"
+    for (root, directories, files) in os.walk(dir_path):
+        for file in files:
+            if str(file) == file_name:
+                return True       
+    return False
+
+                
+
+
+def image_super_resolution():
     print("======================================")
     os.system('python main.py --data_test Demo --scale 4 --pre_train download --test_only --save_results')
     print("======================================")
@@ -30,14 +41,12 @@ def image_super_resoultion():
             file_name = file_name[64:]
             file_name = "x4_" + file_name.split("_")[0]
 
-            print(file_name)
-
             sr_img = cv2.imread(file_path)
 
             cv2.imwrite("/content/django-board/media/" + file_name + ".jpg", sr_img)
 
     remove_files(dir_path)
-    # remove_files("/content/django-board/EDSR-PyTorch/test")
+    remove_files("/content/django-board/EDSR-PyTorch/test")
 
 
 
@@ -50,7 +59,11 @@ def blog(request):
 
 def posting(request, pk):
     post = Post.objects.get(pk=pk)
-    image_super_resoultion()
+    if file_exist_check("x4_" + str(post.mainphoto)):
+        print("이미 SR 결과물이 존재합니다.")
+    else:
+        image_super_resolution()
+
     return render(request, 'main/posting.html', {'post': post})
 
 
@@ -101,7 +114,7 @@ def remove_post(request, pk):
 
 
 def SR(request):
-    image_super_resoultion()
+    image_super_resolution()
     return render(request, 'main/SR_check.html')
 
 

@@ -136,3 +136,9 @@ def admin_page(request):
 
     return render(request, 'main/store_check.html', {'low_capacity' : low_img_store_capacity, 'ori_capacity' : ori_img_store_capacity, 'saved' : saved})
 
+
+def compare(request, pk):
+    post = Post.objects.get(pk=pk)
+    return render(request, 'main/compare.html', {'post': post})
+
+

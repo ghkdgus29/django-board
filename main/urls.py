@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from main.views import index, blog, posting, new_post, remove_post, SR, admin_page
+from main.views import index, blog, posting, new_post, remove_post, SR, admin_page, compare
 
 from django.conf.urls.static import static
 from django.conf import settings
@@ -16,6 +16,7 @@ urlpatterns = [
     path('blog/<int:pk>/remove', remove_post),
     path('blog/SR/', SR),
     path('blog/admin_page/', admin_page),
+    path('blog/<int:pk>/compare', compare),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

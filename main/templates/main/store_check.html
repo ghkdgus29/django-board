@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
-    <h2>절감 비용 확인</h2>
+<body class="container py-4">
+    <h2 class="py-4">절감 비용 확인</h2>
 
-    <h3>{{ori_capacity}} MB ->  {{low_capacity}} MB </h3>
+    <h3 class="py-4">{{ori_capacity}} MB ->  {{low_capacity}} MB </h3>
     
-    <p>
+    <p class="py-4">
     아이폰 14 Pro 용량으로 가격비교 시 <br>
 
     128GB = 155만원 <br>
@@ -18,8 +20,8 @@
     대략 1MB = 1원,<br>
     </p>
 
-    <h3>{{saved}} 원 절감</h3>
+    <h3 class="py-4">{{saved}} 원 절감</h3>
 
-    <a href="/blog/">목록으로</a>
+    <a href="/blog/" class="btn btn-primary" role="button">목록으로</a>
 </body>
 </html>

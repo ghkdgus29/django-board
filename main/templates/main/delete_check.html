@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
-    <h3>게시물 삭제 완료 !!</h3>
-    <a href="/blog/">목록으로</a>
+<body class="container py-4">
+<h3 class="py-4">게시물 삭제 완료 !!</h3>
+<a href="/blog/" role="button" class="btn btn-primary">목록으로</a>
 </body>
 </html>

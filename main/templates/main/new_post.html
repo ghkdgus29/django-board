@@ -1,19 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
     <meta charset="UTF-8">
     <title>글쓰기 페이지</title>
 </head>
 <body>
+<div class="container py-4">
     <h1>글쓰기 페이지</h1>
-    <form method="POST" enctype="multipart/form-data">
+    <form class="my-3" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        제목<br>
-        <input type="text" name="postname"><br>
-        내용<br>
-        <textarea rows="10" cols="50" name="contents"></textarea><br>
-        <input type="file" name="mainphoto"><br>
-        <input type="submit" value="글쓰기">
+        <div class="form-group my-4">
+            <label for="title">제목</label>
+            <input type="text" class="form-control" placeholder="제목을 입력하세요" name="postname">
+        </div>
+        <div class="form-group my-4">
+            <label for="text">내용</label>
+            <textarea rows="10" cols="50" class="form-control" placeholder="내용을 입력하세요" name="contents"></textarea><br>
+        </div>
+        <div class="form-group my-4">
+            <label for="file">파일첨부</label>
+            <input type="file" class="btn btn-success" name="mainphoto"><br>
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="글쓰기">
+        <a href="/blog/" role="button" class="btn btn-danger">목록으로</a>
     </form>
+</div>
 </body>
 </html>

@@ -1,22 +1,39 @@
 <html>
-    <head>
-        <title>Blog List</title>
-    </head>
-    <body>
-        <h1>게시판 페이지입니다</h1>
-        <button><a href="new_post/">글쓰기</a></button>
-        <!-- <button><a href="SR/">SR</a></button> -->
-        <button><a href="admin_page/">절감 비용 확인</a></button>
-        
-        <!-- 게시판(postlist)의 게시글(list)을 하나씩 보여줍니다 -->
-        <!-- {와 %로 이루어진 구문 내부엔 파이썬이 사용됩니다 -->
-        <table>
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <title>Blog List</title>
+</head>
+<body>
+<div class="container py-4">
+    <h1>Image Super-Resolution 게시판</h1>
+    <div class="row">
+        <div class="col-md-6 my-3 ">
+            <a href="new_post/" role="button" class="btn btn-primary">글쓰기</a>
+            <!-- <button><a href="SR/">SR</a></button> -->
+            <a href="admin_page/" role="button" class="btn btn-success">절감 비용 확인</a>
+        </div>
+    </div>
+    <!-- 게시판(postlist)의 게시글(list)을 하나씩 보여줍니다 -->
+    <!-- {와 %로 이루어진 구문 내부엔 파이썬이 사용됩니다 -->
+    <table class="table table-horizontal table-bordered">
+        <thead class="thead-strong">
+        <tr>
+            <th>게시글번호</th>
+            <th>제목</th>
+        </tr>
+        </thead>
+        <tbody>
         {% for list in postlist %}
-            <!-- 게시글 클릭시 세부페이지로 넘어갑니다-->
-            <ul>
-                <li><a href="{{list.pk}}">{{list.postname}}</a></li>
-            </ul>
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><a href="{{ list.pk }}"> {{ list.postname }}</a></td>
+            </tr>
         {% endfor %}
-        </table>
-    </body>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
 </html>

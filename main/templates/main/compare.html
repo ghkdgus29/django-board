@@ -7,12 +7,22 @@
 <body>
 <div class="container py-4">
 
-    <h1 class="py-4">{{ post.postname }} 원본 vs SR</h1>
+    <h1 class="py-4">{{ post.postname }} 이미지 비교</h1>
     <!-- 이미지 보여주기 -->
     {% if post.mainphoto %}
-        <img src="/media/{{ post.mainphoto }}" alt="" height="600">
-        <img src="/media/x4_{{ post.mainphoto }}" alt="" height="600">
+    <table border>
+    <tr>
+        <td><img src="/media/{{ post.mainphoto }}" alt="" height="500"></td>
+        <td><img src="/media/low_{{ post.mainphoto }}" alt="" height="500"></td>
+        <td><img src="/media/x4_{{ post.mainphoto }}" alt="" height="500"></td>
         <br>
+    </tr>
+    <tr align="center">
+        <td>원본 이미지</td>
+        <td>저용량 이미지</td>
+        <td>SR 이미지</td>
+    </tr>
+    </table>
     {% endif %}
     <p class="py-5">{{ post.contents }}</p>
     <a href="/blog/" role="button" class="btn btn-primary">목록</a>

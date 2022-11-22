@@ -96,6 +96,7 @@ def new_post(request):
         low_img = cv2.resize(ori_img, dsize=(0, 0), fx=0.25, fy=0.25, interpolation=cv2.INTER_CUBIC)
 
         cv2.imwrite("/content/django-board/low_img_store/" + file_name, low_img)
+        cv2.imwrite("/content/django-board/media/" + "low_" + file_name, low_img)
         cv2.imwrite("/content/django-board/EDSR-PyTorch/test/" + file_name, low_img)
 
         cv2.imwrite("/content/django-board/ori_img_store/" + file_name, ori_img)
